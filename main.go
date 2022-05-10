@@ -12,8 +12,10 @@ func main() {
 
 	router.GET("/", GetHello)
 	router.GET("/git", GitPass)
+	router.GET("/test1", Test1)
 	port := os.Getenv("PORT")
-	fmt.Println("dominos")
+	dominos := "dominos"
+	fmt.Println(dominos)
 	if port == "" {
 		port = ":9999"
 	}
