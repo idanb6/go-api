@@ -17,7 +17,7 @@ func main() {
 	dominos := "dominos"
 	fmt.Println(dominos)
 	if port == "" {
-		port = ":9999"
+		port = "9999"
 	}
-	router.Run(port)
+	router.Run(":"+port)
 }
