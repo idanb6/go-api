@@ -15,11 +15,12 @@ func GetExecise(c *gin.Context) {
 	} else {
 		c.JSON(200, gin.H{
 			"message": "ok",
+			"total":   len(ex),
 			"data":    ex,
 		})
 	}
-
 }
+
 func GetByIdExecise(c *gin.Context) {
 	exs, err := getExecise()
 	if err != nil {
@@ -41,12 +42,122 @@ func GetByIdExecise(c *gin.Context) {
 			"data":    ex,
 		})
 	}
+}
+
+func GetByNameExecise(c *gin.Context) {
+	exs, err := getExecise()
+	if err != nil {
+		c.JSON(400, gin.H{
+			"data":    "error",
+			"message": err,
+		})
+	}
+	text, ok := c.GetQuery("q")
+	if !ok {
+		c.JSON(400, gin.H{})
+	}
+	ex := findByType("serch", text, exs)
+
+	c.JSON(200, gin.H{
+		"message": "ok",
+		"total":   len(ex),
+		"data":    ex,
+	})
 
 }
 
-func GetHello(c *gin.Context) {
+func GetByTargetExecise(c *gin.Context) {
+	exs, err := getExecise()
+	if err != nil {
+		c.JSON(400, gin.H{
+			"data":    "error",
+			"message": err,
+		})
+	}
+	target := c.Param("target")
+	ex := findByType("target", target, exs)
+	if len(ex) == 0 {
+		c.JSON(200, gin.H{
+			"message": "ok",
+			"data":    nil,
+		})
+	} else {
+		c.JSON(200, gin.H{
+			"message": "ok",
+			"total":   len(ex),
+			"data":    ex,
+		})
+	}
+}
+
+func GetByEquipmentExecise(c *gin.Context) {
+	exs, err := getExecise()
+	if err != nil {
+		c.JSON(400, gin.H{
+			"data":    "error",
+			"message": err,
+		})
+	}
+	equipment := c.Param("equipment")
+	ex := findByType("equipment", equipment, exs)
+	if len(ex) == 0 {
+		c.JSON(200, gin.H{
+			"message": "ok",
+			"data":    nil,
+		})
+	} else {
+		c.JSON(200, gin.H{
+			"message": "ok",
+			"total":   len(ex),
+			"data":    ex,
+		})
+	}
+
+}
+
+func GetByBodyPartExecise(c *gin.Context) {
+	exs, err := getExecise()
+	if err != nil {
+		c.JSON(400, gin.H{
+			"data":    "error",
+			"message": err,
+		})
+	}
+	bodyPart := c.Param("bodyPart")
+	ex := findByType("bodyPart", bodyPart, exs)
+	if len(ex) == 0 {
+		c.JSON(200, gin.H{
+			"message": "ok",
+			"data":    nil,
+		})
+	} else {
+		c.JSON(200, gin.H{
+			"message": "ok",
+			"total":   len(ex),
+			"data":    ex,
+		})
+	}
+
+}
+
+func GetBodyPart(c *gin.Context) {
 	c.JSON(200, gin.H{
 		"message": "ok",
+		"data":    getBodyPart(),
+	})
+}
+
+func GetEquipment(c *gin.Context) {
+	c.JSON(200, gin.H{
+		"message": "ok",
+		"data":    getEquipment(),
+	})
+}
+
+func GetTarget(c *gin.Context) {
+	c.JSON(200, gin.H{
+		"message": "ok",
+		"data":    getTarget(),
 	})
 }
 
